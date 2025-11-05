@@ -29,13 +29,23 @@ app.use(cors())
 
 app.use(express.json())
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("db connected");
-  })
-  .catch((err) => {
-    console.log("error ", err);
-  })
+// ✅ Define connectDB function inside this file
+const connectDB = async () => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      console.log("🔁 Already connected to MongoDB");
+      return;
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("✅ MongoDB Connected Successfully");
+  } catch (err) {
+    console.error("❌ MongoDB Connection Error:", err);
+  }
+};
+
+// Connect once at startup
+connectDB();
 
 let userSchema = mongoose.Schema({
   id: { type: Number, required: true, unique: true },
