@@ -2,7 +2,7 @@ let mongoose = require("mongoose")
 let express = require("express")
 let app = express()
 let cors = require("cors")
-
+require("dotenv").config();
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("./config/cloudinary"); // import your config file
@@ -29,7 +29,7 @@ app.use(cors())
 
 app.use(express.json())
 
-mongoose.connect("mongodb://localhost:27017/mydb", {})
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("db connected");
   })
@@ -166,7 +166,7 @@ app.delete("/api/delete/:id",async (req,res)=>{
   }
 
 })
-
-app.listen(8000, () => {
-  console.log("server started");
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`)
 })
