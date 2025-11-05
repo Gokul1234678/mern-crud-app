@@ -1,6 +1,6 @@
 import axios from "axios";
 
 let axiosInstance= axios.create({
-  baseURL: "http://localhost:8000",  // your backend URL
+  baseURL: "https://backend-crud-mern-gules.vercel.app",  // your backend URL
 });
 export default axiosInstance;
